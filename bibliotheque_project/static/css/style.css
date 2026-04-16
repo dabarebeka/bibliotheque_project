@@ -1,0 +1,72 @@
+/* =========================
+   STYLE GLOBAL
+========================= */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================
+   TITRE
+========================= */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 30px;
+}
+
+/* =========================
+   CARTES DASHBOARD
+========================= */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   GRILLE
+========================= */
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   TEXTE
+========================= */
+p {
+    font-size: 18px;
+    color: #333;
+}
+
+/* =========================
+   BOUTONS (si tu en ajoutes)
+========================= */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}

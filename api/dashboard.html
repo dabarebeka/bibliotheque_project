@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<h1>📊 Dashboard Bibliothèque</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <h3>📚 Livres</h3>
+            <p>{{ livres_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>✍️ Auteurs</h3>
+            <p>{{ auteurs_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>✅ Disponibles</h3>
+            <p>{{ livres_disponibles }}</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
