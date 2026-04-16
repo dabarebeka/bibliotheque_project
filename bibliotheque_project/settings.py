@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+import dj_database_url
+from decouple import config
 from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,16 +9,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 # SECURITY
 # =========================
-SECRET_KEY = 'django-insecure-change-me'
-
-DEBUG = False
-ALLOWED_HOSTS = ['.onrender.com']
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 # =========================
 # APPS
 # =========================
 INSTALLED_APPS = [
-    'jazzmin',  # 🎨 admin UI (optionnel)
+    'jazzmin',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework_simplejwt',
 
     'api',
 ]
@@ -34,7 +38,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,10 +72,10 @@ WSGI_APPLICATION = 'bibliotheque_project.wsgi.application'
 # DATABASE
 # =========================
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3'),
+        conn_max_age=600,
+    )
 }
 
 # =========================
@@ -94,11 +97,24 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =========================
 # DEFAULT AUTO FIELD
 # =========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# =========================
+# REST FRAMEWORK
+# =========================
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 # =========================
 # SIMPLE JWT
